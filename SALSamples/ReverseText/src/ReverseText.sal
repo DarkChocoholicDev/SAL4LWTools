@@ -1,0 +1,58 @@
+/*
+ *  Sample command shell for the CoCo 1/2.
+ *
+ *  Origin: The RSDOS portion of the shell originated in the "Disk EDTASM" manual,
+ *          loosely converted to SAL by Keith Frechette.
+ *
+ *          The shell itself was created by Keith Frechette.
+ */
+
+InputBufferHeader CmdBufHeader;
+char CmdBuf[128];
+
+export void Main()
+{
+    CmdBufHeader.MaxLength = d = 128;
+    Console.WriteLine(x --> Greeting);
+
+    /*
+    repeat
+    {
+        Console.WriteString(x --> CmdPrompt);
+        Console.ReadLine(x --> CmdBufHeader);
+        b = a;
+        Console.WriteChar(a = Char.CR);
+        if (b != Key.Enter)
+        {
+            break;
+        }
+
+        // If at least one character was entered...
+        if (cc.notzero(a = CmdBufHeader.CurrentLength[1]))
+        {
+            if (a > 11)
+            {
+                Console.WriteLine(x --> ErrMsgInvalidFileNameLength);
+                continue;
+            }
+
+            // Copy the filename to the DCB and attempt to open the file for reading (any drive).
+            FillBytes(x --> OpenDCB.DirEntry.FileName, b = 11, a = ' ');
+            CopyBytes(y = x, x --> CmdBuf, b = CmdBufHeader.CurrentLength[1]);
+            //CopyBytes(y = x, x --> CmdBuf);
+            OpenDCB.DskConParms.Drive = a = $FF;
+            DOS.OpenFile(u --> OpenDCB, a = FileStatusFlags.Read);
+            if (cc.zero)
+            {
+                Console.WriteLine(x --> MsgOpenFileSucceeded);
+            }
+            else
+            {
+                Console.WriteLine(x --> ErrMsgOpenFileFailed);
+            }
+        }
+    } until (break);
+    */
+
+    Console.WriteLine(x --> ExitMsg);
+}
