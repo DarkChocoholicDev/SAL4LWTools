@@ -1,58 +1,55 @@
 /*
- *  Sample command shell for the CoCo 1/2.
- *
- *  Origin: The RSDOS portion of the shell originated in the "Disk EDTASM" manual,
- *          loosely converted to SAL by Keith Frechette.
- *
- *          The shell itself was created by Keith Frechette.
+ *  Sample that reverses a user-specified text string.
  */
 
-InputBufferHeader CmdBufHeader;
-char CmdBuf[128];
+#include <SALLib.salinc>;
+.entry Main;
+.org $2000;
+
+char Greeting[] = "SAMPLE: REVERSE-TEXT\r  REVERSES A USER-PROVIDED\r  TEXT STRING.";
+char InputPrompt[] = "\rENTER TEXT TO REVERSE\r: ";
+char OutputMarkerStart[] = "==> ";
+char OutputMarkerEnd[] = " <==";
+char ExitMsg[] = "BYE!";
+InputBufferHeader BufHeader;
+char Buffer[128];
 
 export void Main()
 {
-    CmdBufHeader.MaxLength = d = 128;
+    BufHeader.MaxLength = d = 128;
     Console.WriteLine(x --> Greeting);
 
-    /*
     repeat
     {
-        Console.WriteString(x --> CmdPrompt);
-        Console.ReadLine(x --> CmdBufHeader);
+        // Display the input prompt.
+        Console.WriteString(x --> InputPrompt);
+
+        // Wait for a line of input (or Break).
+        Console.ReadLine(x --> BufHeader);
         b = a;
         Console.WriteChar(a = Char.CR);
+
+        // Exit if Break was pressed.
         if (b != Key.Enter)
         {
             break;
         }
 
         // If at least one character was entered...
-        if (cc.notzero(a = CmdBufHeader.CurrentLength[1]))
+        if (cc.notzero(y = BufHeader.CurrentLength))
         {
-            if (a > 11)
-            {
-                Console.WriteLine(x --> ErrMsgInvalidFileNameLength);
-                continue;
-            }
+            // Write the text in the form: "==> <reversed-text> <=="
+            Console.WriteString(x --> OutputMarkerStart);
 
-            // Copy the filename to the DCB and attempt to open the file for reading (any drive).
-            FillBytes(x --> OpenDCB.DirEntry.FileName, b = 11, a = ' ');
-            CopyBytes(y = x, x --> CmdBuf, b = CmdBufHeader.CurrentLength[1]);
-            //CopyBytes(y = x, x --> CmdBuf);
-            OpenDCB.DskConParms.Drive = a = $FF;
-            DOS.OpenFile(u --> OpenDCB, a = FileStatusFlags.Read);
-            if (cc.zero)
+            x --> Buffer[y];
+            do
             {
-                Console.WriteLine(x --> MsgOpenFileSucceeded);
-            }
-            else
-            {
-                Console.WriteLine(x --> ErrMsgOpenFileFailed);
-            }
+                Console.WriteChar(a = [--x]);
+            } while (cc.notzero(y--));
+
+            Console.WriteLine(x --> OutputMarkerEnd);
         }
     } until (break);
-    */
 
     Console.WriteLine(x --> ExitMsg);
 }

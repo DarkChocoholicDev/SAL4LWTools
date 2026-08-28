@@ -63,10 +63,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NMakeBuildCommandLine>nmake /f Makefile LWToolsPath="%LWToolsPath%" ProjectDir=$(ProjectDir) Configuration=$(Configuration)</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>nmake /f Makefile SAL4LWToolsPath="%SAL4LWToolsPath%" LWToolsPath="%LWToolsPath%" ProjectDir=$(ProjectDir) Configuration=$(Configuration)</NMakeBuildCommandLine>
     <NMakeOutput>RVRSTEXT.BIN</NMakeOutput>
-    <NMakeCleanCommandLine>nmake /f Makefile clean LWToolsPath="%LWToolsPath%" ProjectDir=$(ProjectDir) Configuration=$(Configuration)</NMakeCleanCommandLine>
-    <NMakeReBuildCommandLine>nmake /f Makefile clean all LWToolsPath="%LWToolsPath%" ProjectDir=$(ProjectDir) Configuration=$(Configuration)</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>nmake /f Makefile clean SAL4LWToolsPath="%SAL4LWToolsPath%" LWToolsPath="%LWToolsPath%" ProjectDir=$(ProjectDir) Configuration=$(Configuration)</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>nmake /f Makefile clean all SAL4LWToolsPath="%SAL4LWToolsPath%" LWToolsPath="%LWToolsPath%" ProjectDir=$(ProjectDir) Configuration=$(Configuration)</NMakeReBuildCommandLine>
     <NMakePreprocessorDefinitions>_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

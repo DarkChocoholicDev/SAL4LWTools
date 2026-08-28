@@ -1,15 +1,17 @@
 # SAL4LWTools
-6809/6309 Structured Assembly Language translator, targeting the LWTools assembler and linker.
+6809* Structured Assembly Language translator, targeting the LWTools assembler and linker.
 
-This tool takes structured assembly language source files (for the 6809/6309 microprocessor) and translates them for use as input to
+This tool takes structured assembly language source files (for the 6809 microprocessor) and translates them for use as input to
 the LWTools assembler/linker tool chain. The SAL source files consist of assembly language instructions written in a C-language-like
 manner, combining the readability and ease-of-expression of a C-based language with the low-level control and performance of
 traditional assembly language.
 
+\* The full 6309 instruction set will eventually be supported.
+
 # The Problem to Solve
 Traditionally, assembly language programs are heavily populated with a steady stream of comparisons, branches, and labels that are
-used to manually implement conditional logic such as the "if", "for-next", and "do-while" constructs of higher level languages such as
-C. While not a problem for simpler assembly language programs, this can negatively impact the readability and maintainability of
+used to manually implement conditional logic such as the "if", "for-next", and "do-while" constructs of higher level languages such
+as C. While not a problem for simpler assembly language programs, this can negatively impact the readability and maintainability of
 larger, more complex assembly language programs.
 
 Consider the following assembly language code that displays the 8-bit integers 1 through 10, using the method WriteInt8 to do the actual
