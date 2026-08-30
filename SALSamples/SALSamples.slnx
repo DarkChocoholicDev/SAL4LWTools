@@ -3,5 +3,8 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Solution Items/">
+      <File Path="../README.md" />
+  </Folder>
   <Project Path="ReverseText/ReverseText.vcxproj" />
 </Solution>
