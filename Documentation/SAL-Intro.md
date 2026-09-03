@@ -1,59 +1,81 @@
 # And Introduction to SAL
-Traditionally, assembly language programs are heavily populated with a steady stream of comparisons, branches, and labels that are used to manually implement conditional logic such as the "if", "for-next", and "do-while" constructs of higher level languages such as C. While not a problem for simpler assembly language programs, this can negatively impact the readability and maintainability of larger, more complex assembly language programs.
+Assembly language gives us the power and control to seemingly work miracles with the hardware, often going far beyond the limits of high level languages. But standard assembly language doesn't give us constructs like ```if-else``` statements and ```do-while``` loops to express the structure of our programs. Much of our code, then, is devoted to manually implementing the logic of those constructs, over...and over...and over again, flattened into a sea of comparisons, branches, and labels. No real structure; just a relatively straight line of code down the left side of the page.
 
-Consider the following assembly language code that writes a nul-terminated string to the console, character by character, using the ROM routine ChrOut located at address $A002. It's fairly straight forward, so it isn't hard to follow even without comments.
+In a simple routine with just a few comparisons, branches, and labels, the logic may not be too difficult to glean. For example, here's some code that loops through a string, writing characters to the console until a nul character is encountered. It's relatively easy to follow, especially when we use per-instruction comments to provide a running commentary.
 
-    ChrOut  equ $A002
-	
+    ChrOut      equ $A002       ; Points to the ROM's character output routine.
+    
     WriteString:
-        pshs    a,x
+        pshs    a,x             ; Preserve the A and X registers.
     Loop:
-        lda	    ,x+
-        beq     Done
-        jar     ChrOut
-        bra     Loop
+        lda	    ,x+             ; Get the next character to display, and advance the pointer.
+        beq     Done            ; Leave the loop if it's a nul character ($00).
+        jsr     [ChrOut]        ; Otherwise, write the character.
+        bra     Loop            ; Loop back for the next one.
     Done:
+        puls    a,x             ; Restore the A and X registers.
+        rts
+
+But now let's amp up the complexity just a wee bit, changing the code so that it replaces control characters with spaces and converts lowercase characters to uppercase.
+
+    ChrOut      equ $A002       ; Points to the ROM's character output routine.
+
+    WriteString
+        pshs    a,x
+
+    WS_Loop:
+        lda     ,x+             ; Get the character at X, then increment X.
+        beq     WS_LoopEnd      ; Exit the loop if the character was $00.
+
+        cmpa    #32             ; Is it a control character?
+        bge     WS_NotControl   ; Jump if not.
+        lda     #' '            ; Else replace it with a space character.
+        bra     WS_NotLC        ; And go display it.
+    WS_NotControl:
+
+        cmpa    #'a'            ; Is the character >= lowercase A?
+        blo     WS_NotLC        ; Jump if not.
+        cmpa    #'z'            ; Is the character <= lowercase Z?
+        bhi     WS_NotLC        ; Jump if not.
+        suba    #('a'-'A')      ; Convert the lowercase character to uppercase.
+    WS_NotLC:
+
+        jsr     [ChrOut]        ; Write the character.
+        bra     WS_Loop         ; Loop back and process the next one.
+
+    WS_LoopEnd:
         puls    a,x
         rts
 
-Here's what it would look like in structured assembly language. Other than for the label names, it translates same code as above.
+Although the logic itself is still very straightforward, "flattening" our structure like that makes it seem more complicated than it is. To follow the flow of the code, we must mentally reconstruct the structure that we just flattened.
+
+There's got to be a better way, right? :wink: Right!
+
+## SAL: The Structured Alternative
+Structured Assembly Language (SAL) combines the power and performance of assembly language with the readability and convenience of high level languages, letting us express our low-level code using structure programming constructs. Here's the SAL version of our previous example.
 
     const void ChrOut() ptr = $A002;
 
     void WriteString() : preserve(a,x)
     {
+        // While we haven't reached the end of the string...
         while (cc.notzero(a = [x++]))
         {
+            // Adjust the character if necessary.
+            if (a < 32)
+            {
+                // Replace control characters with single spaces.
+                a = ' ';
+            }
+            else if (a >= 'a' && a <= 'z')
+            {
+                // Convert lowercase characters to uppercase.
+                a -= ('a' - 'A');
+            }
+
+            // Display it.
             ChrOut();
         }
     }
 
-One thing to keep in mind in that example is that, for the assembly language code, we had to uniquely name the label "Loop" such that it wouldn't clash with any other labels in the program. You might imagine that in a program with many comparisons and loops, coming up with unique branch labels for all of them can get tricky to manage. For the structured assembly language code, though, the SAL translator handles the creation and naming of all necessary branch labels.
-
-Let's do one more example, with just a little extra complexity. As we count through our integers, let's skip any that are multiples of the number 4. We can check that by looking at the two least significant bits of the number. If they're both 0, it's a multiple of 4. Since the code is getting a little more complicated, we'll add some comments.
-
-        lda #1            ; Our first integer to display.
-    Loop:
-        bita #%00000011   ; Examine the 2 low bits to see if the number is a multiple of 4.
-        beq SkipByte      ; Skip it if it is.
-        bsr WriteInt8     ; Otherwise, write the integer value to the console.
-    SkipByte:
-        inca              ; Advance to the next integer.
-        cmpa #10          ; Continue our loop if it is less than or equal to 10.
-        blt Loop          ;
-
-And now here it is in SAL, once again being translated into the exactly the same code as as above.
-
-    // Start at 1, and we'll loop through 10.
-    do (a = 1)
-    {
-        // If the integer isn't a multiple of 4, write it to the console.
-        if (cc.notzero(a & %00000011))
-        {
-            bsr WriteInt8
-        }
-
-        a++
-    } while (a < 10)
-
-Even though we've not yet ventured into anything terribly complicated, we can see that SAL let's us express the logic in a manner similar to high-level languages, yet we still have full control over the code that is produced. Additionally, because the logic is more apparent, the SAL code doesn't generally require the level of commenting typically done in assembly language program.
+And now we clearly see the structure of the code! With *structured* assembly langauge, we can focus less on managing comparison, branches, and labels and more on implementing our program logic.
