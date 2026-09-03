@@ -1,4 +1,4 @@
-# And Introduction to SAL
+# An Introduction to SAL
 Assembly language gives us the power and control to seemingly work miracles with the hardware, often going far beyond the limits of high level languages. But standard assembly language doesn't give us constructs like ```if-else``` statements and ```do-while``` loops to express the structure of our programs. Much of our code, then, is devoted to manually implementing the logic of those constructs, over...and over...and over again, flattened into a sea of comparisons, branches, and labels. No real structure; just a relatively straight line of code down the left side of the page.
 
 In a simple routine with just a few comparisons, branches, and labels, the logic may not be too difficult to glean. For example, here's some code that loops through a string, writing characters to the console until a nul character is encountered. It's relatively easy to follow, especially when we use per-instruction comments to provide a running commentary.
@@ -52,7 +52,7 @@ Although the logic itself is still very straightforward, "flattening" our struct
 There's got to be a better way, right? :wink: Right!
 
 ## SAL: The Structured Alternative
-Structured Assembly Language (SAL) combines the power and performance of assembly language with the readability and convenience of high level languages, letting us express our low-level code using structure programming constructs. Here's the SAL version of our previous example.
+Structured Assembly Language (SAL) combines the power and performance of assembly language with the readability and convenience of high level languages, letting us express our low-level code using structured programming constructs. Here's the SAL version of our previous example. Notice how the logic is much easier to follow now that the structure is visible.
 
     const void ChrOut() ptr = $A002;
 
@@ -78,4 +78,4 @@ Structured Assembly Language (SAL) combines the power and performance of assembl
         }
     }
 
-And now we clearly see the structure of the code! With *structured* assembly langauge, we can focus less on managing comparison, branches, and labels and more on implementing our program logic.
+With *structured* assembly langauge, we can focus less on managing comparison, branches, and labels and more on implementing our program logic.
