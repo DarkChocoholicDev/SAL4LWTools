@@ -1,7 +1,7 @@
 # An Introduction to SAL
-Assembly language gives us the power and control to seemingly work miracles with the hardware, often going far beyond the limits of high level languages. But standard assembly language doesn't give us constructs like ```if-else``` statements and ```do-while``` loops to express the structure of our programs. Much of our code, then, is devoted to manually implementing the logic of those constructs, over...and over...and over again, flattened into a sea of comparisons, branches, and labels. No real structure; just a relatively straight line of code down the left side of the page.
+Assembly language gives us full control of the hardware, letting us push beyond the limits of high level languages. But *standard* assembly language doesn't give us constructs like ```if-else``` statements and ```do-while``` loops to fully express the structure of our programs. Without them, much of our effort is spent on tediously implementing those constructs over and over, and ultimately, our beautifully-thought-out logic gets lost in a sea of labels, comparisons, and jumps.
 
-In a simple routine with just a few comparisons, branches, and labels, the logic may not be too difficult to glean. For example, here's some code that loops through a string, writing characters to the console until a nul character is encountered. It's relatively easy to follow, especially when we use per-instruction comments to provide a running commentary.
+In a very simple routine, the logic will likely be discernable despite the lack of structure. For instance, consider the code below which loops through each character of a string, writing characters to the console until a nul character is encountered. Even though the structure isn't apparent, the choice of label names along with the per-instruction comments helps to convey the logic.
 
     ChrOut      equ $A002       ; Points to the ROM's character output routine.
     
@@ -16,7 +16,7 @@ In a simple routine with just a few comparisons, branches, and labels, the logic
         puls    a,x             ; Restore the A and X registers.
         rts
 
-But now let's amp up the complexity just a wee bit, changing the code so that it replaces control characters with spaces and converts lowercase characters to uppercase.
+But let's increase the complexity a little, changing the code so that it replaces control characters with spaces and converts lowercase characters to uppercase.
 
     ChrOut      equ $A002       ; Points to the ROM's character output routine.
 
@@ -47,12 +47,12 @@ But now let's amp up the complexity just a wee bit, changing the code so that it
         puls    a,x
         rts
 
-Although the logic itself is still very straightforward, "flattening" our structure like that makes it seem more complicated than it is. To follow the flow of the code, we must mentally reconstruct the structure that we just flattened.
+In this case, gleaning the *intended* logic shouldn't take much time because of the self-documenting nature of the code, but what if we had to update it or debug a problem with it? For that, we'd need to figure out the *actual* logic, and the lack of structure greatly complicates that process.
 
 There's got to be a better way, right? :wink: Right!
 
 ## SAL: The Structured Alternative
-Structured Assembly Language (SAL) combines the power and performance of assembly language with the readability and convenience of high level languages, letting us express our low-level code using structured programming constructs. Here's the SAL version of our previous example. Notice how the logic is much easier to follow now that the structure is visible.
+Structured Assembly Language (SAL) combines the power and performance of assembly language with the readability and convenience of C-like languages, letting us express our low-level code using structured programming constructs. Here's the SAL version of our previous example. Notice how the clear structure makes it much easier to discern the logic.
 
     const void ChrOut() ptr = $A002;
 
@@ -78,4 +78,7 @@ Structured Assembly Language (SAL) combines the power and performance of assembl
         }
     }
 
-With *structured* assembly langauge, we can focus less on managing comparison, branches, and labels and more on implementing our program logic.
+By writing in SAL, we can focus our effort on expressing our logic, leaving the sea of labels, comparisons, and jumps to the translator.
+
+## What's in SAL?
+In this section we'll survey the language features of SAL.
