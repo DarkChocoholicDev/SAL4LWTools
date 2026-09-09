@@ -485,8 +485,7 @@ Examples:
 
     if ((a != 0 && b >= 32) || (a == 128 && b == 42) ...
 
-The following condition code operators may also be used: ```cc.carry```, ```cc.nocarry```, ```cc.zero```, ```cc.notzero```, ```cc.overflow```, ```cc.nooverflow```, 
-```cc.negative```, and ```cc.positive```. They can be used as-is within the conditional expression, or they can be used to evaluate the result of an expression, in the form of cc.*condition*(*expression*), such as ```cc.zero(a & $80)```.
+The following condition code operators may also be used. They can be used as-is within the conditional expression, or they can be used to evaluate the result of an expression, in the form of cc.*condition*(*expression*), such as ```cc.zero(a & $80)```.
 
 | Condition Code Operator |
 |----------|
@@ -681,11 +680,11 @@ Variables can be declared globally or locally (within a function), and they can 
 The follow types are currently supported for variable declarations.
 
 | Type | Sign/Unsigned | Width | Notes |
-|------|---------------|-------|
-| char | signed | 8 bits |
-| byte | unsigned | 8 bits |
-| int | signed | 16 bits |
-| word | unsigned | 16 bits |
+|------|---------------|-------|-------|
+| char | signed | 8 bits | |
+| byte | unsigned | 8 bits | |
+| int | signed | 16 bits | |
+| word | unsigned | 16 bits | |
 | enum | signed | 8 or 16 bits | Initialization not yet supported. |
 | struct | n/a | user-defined | Initialization not yet supported. |
 
