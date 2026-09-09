@@ -508,7 +508,7 @@ Examples:
 The following condition code operators may also be used instead of the standard conditional operators.
 
 | Condition Code Operator | Meaning | Type | Standard Operator |
-|---------------------|------------------------|-----------------|
+|---------------------|-------------|------|-----------------|
 | cc.comp.eq | Equal | | == |
 | cc.comp.ne | Not equal | | != |
 | cc.comp.ge | Greater or equal | signed | >= |
