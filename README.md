@@ -30,6 +30,18 @@ can now look like this:
 
 \*The full 6309 instruction set will eventually be supported.
 
+# Licensing
+Although my current desire is to release SAL4LWTools as open source in a later stage of the project, for now I'm releasing it as a binary package along with sample code and the SALLib runtime library. I'm still working on the appropriate LICENSE files to include within the repo and inside the release package. For now, though, here is a run-down of the intended licensing.
+
+**SAL4LWTools:** Copyright © Keith Frechette. All rights reserved. The SAL4LWTools application is currently distributed as freeware; its source code is not currently released under an open-source license.
+
+**SAL Library:** Licensed under the Zero-Clause BSD (0BSD) license. SALLib code may be freely incorporated into programs, including commercial programs, without attribution.
+
+**Sample Code:** Licensed under the Zero-Clause BSD (0BSD) license. Sample code may be freely copied, modified, and incorporated into your own programs without attribution.
+
+Programs created using SAL4LWTools are the property of their respective authors and are not subject to the SAL4LWTools license merely because SAL4LWTools was used to translate them.
+
+
 # Project Status
 Welcome to the "proof-of-concept" phase of SAL4LWTools!
 
