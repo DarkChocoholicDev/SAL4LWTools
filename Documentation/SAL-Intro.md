@@ -539,7 +539,7 @@ The following example shows how these operators might be used.
 ## Conditional Execution and Looping
 SAL supports the ```if``` statement for simple conditional execution and the ```do-while```, ```for```, ```repeat-until```, and ```while``` statements for looping.
 
-### The IF statement
+### The ```IF``` statement
 Here's the syntax of the ```if``` statement. As with C, it can optionally have one or more ```else if``` clauses and an optional ```else``` clause.
 
     if (conditional-expression)

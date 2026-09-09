@@ -3,9 +3,10 @@ Installation of SAL4LWTools consists of:
 
     1. Extracting the contents of the .zip file to the location
        of your choice;
-    2. Configuring access to the SAL4LWTools executables;
-    3. Configuring access to the LWTools executables; and
-    4. Testing the SAL4LWTools installation.
+    2. "Unblocking" the executable;
+    3. Configuring access to the SAL4LWTools executables;
+    4. Configuring access to the LWTools executables; and
+    5. Testing the SAL4LWTools installation.
 
 It is expected that the LWTools toolchain (https://www.lwtools.ca/)
 is already installed on the system.
@@ -16,7 +17,19 @@ the sample code "in place", then be sure to choose an installation directory
 that is writeable by applications. Otherwise, the installation directory
 does not need to be writeable by applications.
 
-## Step 2. (Optional) Configure access to the SAL4LWTools executables.
+## Step 2. "Unblocking" the SAL4LWTools Executable
+Depending on the security settings of your computer, Windows may be set up to block the execution of programs downloaded from the Internet that aren't "signed" with a known-good signing certificate. Since SAL4LWTools.exe hasn't been signed, Windows may fail to run the program until you "unblock" it by:
+
+1. Launching Windows Explorer and navigating to the SAL4LWTools installation directory;
+2. Right-clicking on SAL4LWTools.exe;
+3. Clicking the "Unblock" checkbox (if it is unchecked) at the bottom of the "General" tab;
+4. Clicking the "Apply" button; and
+5. Selecting "Continue" if you are prompted to provide administrator permission.
+
+After that, you should be able to run the executable.
+
+
+## Step 3. (Optional) Configure access to the SAL4LWTools executables.
 To access SAL4LWTools from make files and build scripts without hard-coding
 the SAL4LWTools installation directory, you may want to add the directory
 to your system's executable search path. Alternatively, you may want to add
@@ -31,7 +44,7 @@ Example:
     set SAL4LWToolsPath=C:\Program Files\SAL4LWTools
 
 
-## Step 3. (Optional) Configure access to the LWTools executables.
+## Step 4. (Optional) Configure access to the LWTools executables.
 If you plan to use the "assemble" and "assemble and link" features of 
 SAL4LWTools to automatically executate LWASM and LWLINK after a SAL
 translation, you'll need to let SAL4LWTools know where to find the LWTools
@@ -45,7 +58,7 @@ Example:
     set LWToolsPath=C:\Program Files\lwtools-4.24
 
 
-## Step 4. Test your installation.
+## Step 5. Test your installation.
 To test whether SAL4LWTools is properly accessible via the path or
 environment variables, you can use the "testconfig" command. First, switch
 to a writable directory, and then issue the testconfig command as shown
