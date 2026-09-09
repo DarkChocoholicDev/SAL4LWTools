@@ -113,16 +113,6 @@ yields:
 And finally, some 6809 operations that would benefit from having operators don't have a suitable equivalent in C-like languages, so SAL provides a way to write those operations in a way that keeps the feel of a C-like language. For instance, the ```MUL``` instruction, which multiplies the A and B registers and stores the result in the D register, can be written as ```d = a * b```; the traditional C-like multiplication assignment operator ```a *= b``` isn't used because it doesn't fully convey the behavior of the instruction.
 
 ### Operator Mapping
-<style>
-    .operator-table td:nth-child(2) {
-		text-align: center;
-		/*font-family: monospace;*/
-	}
-
-    .operator-table td:nth-child(3) { 
-		font-family: monospace;
-	}
-</style>
 <table class="operator-table">
 	<thead>
 		<tr>
@@ -136,71 +126,102 @@ And finally, some 6809 operations that would benefit from having operators don't
 		<tr>
 			<td>ABX</td>
 			<td>x += b</td>
-			<td>x += b;</td>
+			<td><code>x += b;</code></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>ADC</td>
 			<td><em>r</em> += <em>m</em> + cc.carry</td>
-			<td>a += 10 + cc.carry;<br />a += MyByte + cc.carry;</td>
+			<td>
+				<code>a += 10 + cc.carry;</code><br />
+				<code>a += MyByte + cc.carry;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>ADD</td>
 			<td>+=</td>
-			<td>a += 10;<br />d += MyWord;</td>
+			<td>
+				<code>a += 10;</code><br />
+				<code>d += MyWord;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>AND</td>
 			<td>&=</td>
-			<td>a &= 10;<br />a &= MyByte;</td>
+			<td>
+				<code>a &= 10;</code><br />
+				<code>a &= MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>ANDCC</td>
 			<td>cc.clear(<em>flags</em>)</td>
-			<td>cc.clear(cc.zero, cc.negative);</td>
+			<td>
+				<code>cc.clear(cc.zero, cc.negative);</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>ASL</td>
 			<td><<=</td>
-			<td>a <<= 3;<br/>MyByte <<= 3;</td>
+			<td>
+				<code>a <<= 3;</code><br/>
+				<code>MyByte <<= 3;</code>
+			</td>
 			<td>ASL and LSL are the same opcode on the 6809.</td>
 		</tr>
 		<tr>
 			<td>ASR</td>
 			<td>>>=</td>
-			<td>signed(a) >>= 3;</br>signed(MyByte) >>= 3;</br>MyChar >>= 3;</td>
+			<td>
+				<code>signed(a) >>= 3;</code></br>
+				<code>signed(MyByte) >>= 3;</code></br>
+				<code>MyChar >>= 3;</code>
+			</td>
 			<td>ASR is used when the r/m value is signed;otherwise, LSR is used.</td>
 		</tr>
 		<tr>
 			<td>BIT</td>
 			<td>&</td>
-			<td>a & 10;<br />a & MyByte;</td>
+			<td>
+				<code>a & 10;</code><br />
+				<code>a & MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>CLR</td>
 			<td>-=</td>
-			<td>a -= a;<br />MyByte -= MyByte;</td>
+			<td>
+				<code>a -= a;</code><br />
+				<code>MyByte -= MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>CMP</td>
 			<td>==, !=, <, >, <=, >=</td>
-			<td>a == 10;<br />x >= MyWord;</td>
+			<td>
+				<code>a == 10;</code><br />
+				<code>x >= MyWord;</code>
+			</td>
 			<td>Used stand-alone or as part of a conditional expression.</td>
 		</tr>
 		<tr>
 			<td>COM</td>
 			<td>~=</td>
-			<td>a ~= a;<br />MyByte ~= MyByte;</td>
+			<td>
+				<code>a ~= a;</code><br />
+				<code>MyByte ~= MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>CWAI</td>
+			<td></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -213,31 +234,55 @@ And finally, some 6809 operations that would benefit from having operators don't
 		<tr>
 			<td>DEC</td>
 			<td>--</td>
-			<td>a--;<br />--a;<br />MyByte--;<br />--MyByte;</td>
+			<td>
+				<code>a--;</code><br />
+				<code>--a;</code><br />
+				<code>MyByte--;</code><br />
+				<code>--MyByte;</code>
+			</td>
 			<td>Currently, these always function as prefix operators.</td>
 		</tr>
 		<tr>
 			<td>EOR</td>
 			<td>^=</td>
-			<td>a ^= 10;<br />a ^= MyByte;</td>
+			<td>
+				<code>a ^= 10;</code><br />
+				<code>a ^= MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>EXG</td>
 			<td><-></td>
-			<td>a <-> b;<br />a <-> dp;<br />x <-> y;</td>
+			<td>
+				<code>a <-> b;</code><br />
+				<code>a <-> dp;</code><br />
+				<code>x <-> y;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>INC</td>
 			<td>++</td>
-			<td>a++;<br />++a;<br />MyByte++;<br />++MyByte;</td>
+			<td>
+				<code>a++;</code><br />
+				<code>++a;</code><br />
+				<code>MyByte++;</code><br />
+				<code>++MyByte;</code>
+			</td>
 			<td>Currently, these always function as prefix operators.</td>
 		</tr>
 		<tr>
 			<td>LD</td>
 			<td>=</td>
-			<td>a = 10;<br />s = MyWord;<br />a = [x++];<br />d = [---s];<br />a = x:MyStruct.MyByteField;<br />a = x:MyStruct.MyWordField[1];</td>
+			<td>
+				<code>a = 10;</code><br />
+				<code>s = MyWord;</code><br />
+				<code>a = [x++];</code><br />
+				<code>d = [---s];</code><br />
+				<code>a = x:MyStruct.MyByteField;</code><br />
+				<code>a = x:MyStruct.MyWordField[1];</code>
+			</td>
 			<td>
 				In memory references:
 				<br/><span style="padding-left: 20px;" >++ post-increments by 1</span>
@@ -249,43 +294,67 @@ And finally, some 6809 operations that would benefit from having operators don't
 		<tr>
 			<td>LEA</td>
 			<td>--><br />--, ++, -=, +=</td>
-			<td>x --> pcr:MyByte;<br />x --> x[a];<br />x--;<br />x++;<br />x += 1000;<br />x -= 1000;</td>
+			<td>
+				<code>x --> pcr:MyByte;</code><br />
+				<code>x --> x[a];</code><br />
+				<code>x--;</code><br />
+				<code>x++;</code><br />
+				<code>x += 1000;</code><br />
+				<code>x -= 1000;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>LSL</td>
 			<td><<=</td>
-			<td>a <<= 3;<br />MyByte <<= 3;</td>
+			<td>
+				<code>a <<= 3;</code><br />
+				<code>MyByte <<= 3;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>LSR</td>
 			<td>>>=</td>
-			<td>a >>= 3;<br />MyByte >>= 3;</td>
+			<td>
+				<code>a >>= 3;</code><br />
+				<code>MyByte >>= 3;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>MUL</td>
 			<td>d = a * b</td>
-			<td>d = a * b;<br />d = b * a;</td>
+			<td>
+				<code>d = a * b;</code><br />
+				<code>d = b * a;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>NEG</td>
 			<td>-</td>
-			<td>a = -a;<br />MyByte = -MyByte;</td>
+			<td>
+				<code>a = -a;</code><br />
+				<code>MyByte = -MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>OR</td>
 			<td>|=</td>
-			<td>a |= 10;<br />a |= MyByte;</td>
+			<td>
+				<code>a |= 10;</code><br />
+				<code>a |= MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>ORCC</td>
 			<td>cc.set(<em>flags</em>)</td>
-			<td>cc.set(cc.zero, cc.negative);</td>
+			<td>
+				<code>cc.set(cc.zero, cc.negative);</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
@@ -315,19 +384,28 @@ And finally, some 6809 operations that would benefit from having operators don't
 		<tr>
 			<td>ROL</td>
 			<td><em>r</em>.rotcl(<em>n</em>)<br/>byte.rotcl(<em>m</em>, <em>n</em>)</td>
-			<td>a.rotcl(3);<br />byte.rotcl(MyByte, 3);</td>
+			<td>
+				<code>a.rotcl(3);</code><br />
+				<code>byte.rotcl(MyByte, 3);</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>ROR</td>
 			<td><em>r</em>.rotcr(<em>n</em>)<br/>byte.rotcr(<em>m</em>, <em>n</em>)</td>
-			<td>a.rotcr(3);<br />byte.rotcr(MyByte, 3);</td>
+			<td>
+				<code>a.rotcr(3);</code><br />
+				<code>byte.rotcr(MyByte, 3);</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>SBC</td>
 			<td><em>r</em> -= <em>m</em> + cc.carry</td>
-			<td>a -= 10 + cc.carry;<br />a -= MyByte + cc.carry;</td>
+			<td>
+				<code>a -= 10 + cc.carry;</code><br />
+				<code>a -= MyByte + cc.carry;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
@@ -340,12 +418,12 @@ And finally, some 6809 operations that would benefit from having operators don't
 			<td>ST</td>
 			<td>=</td>
 			<td>
-				MyByte = a;<br />
-				MyWord = s;<br />
-				[x++] = a;<br />
-				[---s] = d;<br />
-				x:MyStruct.MyByteField = a;<br />
-				x:MyStruct.MyWordField[1] = a;
+				<code>MyByte = a;</code><br />
+				<code>MyWord = s;</code><br />
+				<code>[x++] = a;</code><br />
+				<code>[---s] = d;</code><br />
+				<code>x:MyStruct.MyByteField = a;</code><br />
+				<code>x:MyStruct.MyWordField[1] = a;</code>
 			</td>
 			<td>
 				In memory references:
@@ -358,19 +436,28 @@ And finally, some 6809 operations that would benefit from having operators don't
 		<tr>
 			<td>SUB</td>
 			<td>-=</td>
-			<td>a -= 10;<br />d -= MyWord;</td>
+			<td>
+				<code>a -= 10;</code><br />
+				<code>d -= MyWord;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>TFR</td>
 			<td>=</td>
-			<td>a = b;<br />d = pc;</td>
+			<td>
+				<code>a = b;</code><br />
+				<code>d = pc;</code>
+			</td>
 			<td></td>
 		</tr>
 		<tr>
 			<td>TST</td>
 			<td><em>r/m</em></td>
-			<td>a;<br />MyByte;</td>
+			<td>
+				<code>a;</code><br />
+				<code>MyByte;</code>
+			</td>
 			<td></td>
 		</tr>
 	</tbody>
