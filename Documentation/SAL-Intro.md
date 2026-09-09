@@ -73,12 +73,12 @@ In this section we'll take a brief look at the elements of structured assembly l
 
 Here are the key elements of SAL that we'll look at in this section.
 
-- [Operators](#Operators)
-- [Conditional expressions](#ConditionalExpressions)
-- [Conditional execution and looping](#Conditional Execution and Looping)
+- [Operators](#operators)
+- [Conditional expressions](#conditional-expressions)
+- [Conditional execution and looping](#conditional-execution-and-looping)
 - General expressions
 - Statements and statement blocks
-- Variables
+- [Variables and Constants](#variables-and-constants)
 - Enumerations
 - Structures
 - Functions
@@ -473,7 +473,7 @@ Conditional expressions are used with the ```if``` statement and the various loo
         .
     }
 
-Conditional expressions can be combined using parentheses and the conditional operators ```||``` and ```&&```.
+The standard conditional operators are ```==```, ```!=```, ```<```, ```>```, ```<=```, and ```>=```. Conditional expressions can be combined using parentheses and the conditional operators ```||``` and ```&&```.
 
 Examples:
 
@@ -484,6 +484,57 @@ Examples:
     if (a != 0 && b >= 32) ...
 
     if ((a != 0 && b >= 32) || (a == 128 && b == 42) ...
+
+The following condition code operators may also be used: ```cc.carry```, ```cc.nocarry```, ```cc.zero```, ```cc.notzero```, ```cc.overflow```, ```cc.nooverflow```, 
+```cc.negative```, and ```cc.positive```. They can be used as-is within the conditional expression, or they can be used to evaluate the result of an expression, in the form of cc.*condition*(*expression*), such as ```cc.zero(a & $80)```.
+
+| Condition Code Operator |
+|----------|
+| cc.carry |
+| cc.nocarry |
+| cc.zero |
+| cc.notzero |
+| cc.overflow |
+| cc.nooverflow |
+| cc.negative |
+| cc.positive |
+
+Examples:
+
+    if (cc.zero) ...
+
+    if (cc.notzero(b--)) ...
+
+The following condition code operators may also be used instead of the standard conditional operators.
+
+| Condition Code Operator | Meaning | Type | Standard Operator |
+|---------------------|------------------------|-----------------|
+| cc.comp.eq | Equal | | == |
+| cc.comp.ne | Not equal | | != |
+| cc.comp.ge | Greater or equal | signed | >= |
+| cc.comp.gt | Greater | signed | > |
+| cc.comp.le | Less or equal | signed | <= |
+| cc.comp.lt | Less | signed | < |
+| cc.comp.hi | Greater or equal | unsigned | >= |
+| cc.comp.hs | Greater | unsigned | > |
+| cc.comp.ls | Less or equal | unsigned | <= |
+| cc.comp.lo | Less | unsigned | < |
+
+The following example shows how these operators might be used.
+
+    //
+    //  Write character (in A) to console, replacing control
+    //  characters with spaces.
+    //
+    cmpa    #32;            // Is it a control character (< 32)?
+    if (cc.comp_lt)         // If so...
+    {
+        lda     #32;        //     Replace it with a space character.
+    }
+
+    bsr     WriteChar;      // Display the character.
+
+
 
 ## Conditional Execution and Looping
 SAL supports the ```if``` statement for simple conditional execution and the ```do-while```, ```for```, ```repeat-until```, and ```while``` statements for looping.
@@ -619,5 +670,55 @@ while (cc.notzero(a = [x++])
     Console.WriteChar();
 }
 ```
+
+## Variables and Constants
+
+### Variables
+Variables can be declared globally or locally (within a function), and they can be either a single instance or an array. When declared globally, they can have initializers.
+
+***NOTE:** Structure variables and enumeration types cannot currently have initializers. I expect to add support for that in the future.*
+
+The follow types are currently supported for variable declarations.
+
+| Type | Sign/Unsigned | Width | Notes |
+|------|---------------|-------|
+| char | signed | 8 bits |
+| byte | unsigned | 8 bits |
+| int | signed | 16 bits |
+| word | unsigned | 16 bits |
+| enum | signed | 8 or 16 bits | Initialization not yet supported. |
+| struct | n/a | user-defined | Initialization not yet supported. |
+
+Examples:
+
+    enum FurColor
+    {
+        Black = 0,
+        Brown = 1,
+        Golden = 2,
+        White = 3,
+        Spotted = 4
+    }
+
+    struct Pet
+    {
+        char Name[20];
+        FurColor FurColor;
+    }
+
+    byte MyByte;
+    byte MyInitializedByte = $99;
+    char Key;
+    char MsgHelloWorld[] = "Hello, World!";
+    int MyInteger = 12345;
+    word WordArray1[16];
+    word WordArray2[] = { 100, 200, 300, 400, 500, 600, 700, 800 };
+    Pet MyPet;
+    char MyFurColor;
+
+    MyPet.FurColor = a = FurColor.Brown;
+    MyFurColor = a = FurColor.Golden;
+
+
 
 **... WORK IN PROGRESS! ...**

@@ -6,6 +6,7 @@
   <Folder Name="/Solution Items/">
       <File Path="../README.md" />
       <File Path="../Documentation/SAL-Intro.md" />
+      <File Path="../Documentation/How-to-Install.md" />
   </Folder>
   <Project Path="ReverseText/ReverseText.vcxproj" />
 </Solution>
