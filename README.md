@@ -46,7 +46,7 @@ Although some elements of this SAL implementation necessarily reflect the capabi
 
 [How to Install](Documentation/How-to-Install.md)
 
-How to Use SAL4LWTools
+[How to Use SAL4LWTools](Documentation/How-to-Use.md)
 
 How to Write SAL Code
 
