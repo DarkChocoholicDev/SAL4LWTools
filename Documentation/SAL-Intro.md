@@ -1,4 +1,4 @@
-==**... WORK IN PROGRESS! ...**==
+**... WORK IN PROGRESS! ...**
 
 
 # An Introduction to SAL
@@ -74,8 +74,8 @@ In this section we'll take a brief look at the elements of structured assembly l
 Here are the key elements of SAL that we'll look at in this section.
 
 - [Operators](#Operators)
-- Conditional expressions
-- Conditional execution and looping
+- [Conditional expressions](#ConditionalExpressions)
+- [Conditional execution and looping](#Conditional Execution and Looping)
 - General expressions
 - Statements and statement blocks
 - Variables
@@ -463,4 +463,161 @@ And finally, some 6809 operations that would benefit from having operators don't
 	</tbody>
 </table>
 
-==**... WORK IN PROGRESS! ...**==
+## Conditional Expressions
+Conditional expressions are used with the ```if``` statement and the various looping constructs. In the case of the ```if``` statement, the conditional expression is placed within the parentheses immediately following the ```if``` keyword.
+
+    if (conditional-expression)
+    {
+        .
+        .
+        .
+    }
+
+Conditional expressions can be combined using parentheses and the conditional operators ```||``` and ```&&```.
+
+Examples:
+
+    if (a == 13) ...
+
+    if (a == 13 || a == 10) ...
+
+    if (a != 0 && b >= 32) ...
+
+    if ((a != 0 && b >= 32) || (a == 128 && b == 42) ...
+
+## Conditional Execution and Looping
+SAL supports the ```if``` statement for simple conditional execution and the ```do-while```, ```for```, ```repeat-until```, and ```while``` statements for looping.
+
+### The IF statement
+Here's the syntax of the ```if``` statement. As with C, it can optionally have one or more ```else if``` clauses and an optional ```else``` clause.
+
+    if (conditional-expression)
+        statement
+    else if (conditional-expression)
+        statement
+    .
+    .
+    .
+    else
+        statement
+
+Example:
+
+    if (b == 10 || b == 13)
+    {
+        b = 32;
+    }
+    else if (b > 126)
+    {
+        b = '.';
+    }
+    else
+    {
+        ToUpper();
+    }
+
+### The ```DO-WHILE``` loop
+Unlike in the C language, the ```do-while``` loop has two forms. The first form is like that of C.
+
+    do
+        statement
+    while (conditional-expression);
+
+The second form includes a initializer.
+
+    do (initializer)
+        statement
+    while (conditional-expression);
+
+Examples:
+
+```
+do
+{
+    Console.ReadChar();
+} while (a != 13);
+```
+
+```
+do (a = ' ', b = 8)
+{
+    Console.WriteChar();
+} while (cc.notzero(b--));
+```
+
+### The ```FOR``` loop
+The ```for``` loop is much as it is in the C language, except that the initializer cannot declare local variables.
+
+    for (initializer; conditional-expression; iterator)
+        statement
+
+Examples:
+
+```
+for (a = 'A'; a <= 'Z'; a++)
+{
+    Console.WriteChar();
+}
+```
+
+```
+for (a = 'A',b = 'Z'; a <= 'Z'; a++, b--)
+{
+    Console.WriteChar();
+    a <-> b;
+    Console.WriteChar();
+    a <-> b;
+}
+```
+
+### The ```REPEAT-UNTIL``` loop
+Unlike the C language, SAL provides a ```repeat-until``` loop to complement the ```do-while``` loop, and it has two forms. The first is without an initializer.
+
+    repeat
+        statement
+    until (conditional-expression_or_break)
+
+The second form includes an initializer.
+
+    repeat (initializer)
+        statement
+    until (conditional-expression_or_break)
+
+In both forms, the conditional-expression can be the keyword ```break``` to loop indefinitely until the body of the loop executes a ```break``` statement.
+
+Examples:
+
+```
+repeat
+    Console.ReadChar();
+until (a == 13);
+```
+
+```
+repeat (b = 0)
+    Console.ReadChar();
+    if (a == Key.Break)
+    {
+        b = 1;
+        break;
+    }
+    Console.WriteChar();
+until (break);
+```
+
+### The ```WHILE``` loop
+The ```while``` loop is much as it is with the C language.
+
+    while (conditional-expression)
+        statement
+
+Example:
+
+```
+while (cc.notzero(a = [x++])
+{
+    Console.WriteChar();
+}
+```
+
+**... WORK IN PROGRESS! ...**
